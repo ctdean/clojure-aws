@@ -1,0 +1,45 @@
+typica 1.5.2
+06-May-2009
+
+http://code.google.com/p/typica
+
+This is a simple API to access Amazon's SQS, EC2, SimpleDB, FPS and DevPay web services. It uses the QUERY interface. This code is thread-safe and works very reliably to the best of my knowledge. I've been using it on a system where sending messages in SQS is critical and we manage pools of servers in EC2.
+
+Distribution files;
+README      - this file
+LICENSE.txt - full version of the Apache 2.0 license
+Log4J.xml   - a Log4J config file you can include in your classpath
+typica.jar  - the classes for this release
+apidocs     - JavaDoc for this release
+
+Test files
+In subversion, the test directory contains some java test files. Sample code is also documented on the wiki @ http://code.google.com/p/typica/wiki/TypicaSampleCode. These can be used as sample files and to test various features of the client code. There is a target "test.main". To invoke the sample code, you can use this target like this;
+ant test.main -Dclass=TestQueueService -Dargs=testQueue
+
+Change history for this release;
+------------------------------------------------------------------------
+r254 | dkavanagh | 2009-05-06 11:23:49 -0400 (Wed, 06 May 2009) | 2 lines
+
+fixed version 2 url encoding
+------------------------------------------------------------------------
+r248 | dkavanagh | 2009-04-09 21:19:46 -0400 (Thu, 09 Apr 2009) | 2 lines
+
+added platform attribute to ImageDescription
+------------------------------------------------------------------------
+r247 | dkavanagh | 2009-04-09 21:18:10 -0400 (Thu, 09 Apr 2009) | 2 lines
+
+fixed issue #46
+------------------------------------------------------------------------
+r246 | dkavanagh | 2009-04-09 20:54:40 -0400 (Thu, 09 Apr 2009) | 2 lines
+
+fixed spelling on purchaseReservedInstance attribute
+------------------------------------------------------------------------
+r245 | dkavanagh | 2009-04-09 20:53:57 -0400 (Thu, 09 Apr 2009) | 2 lines
+
+added support for message attributes
+------------------------------------------------------------------------
+r244 | dkavanagh | 2009-04-09 08:30:11 -0400 (Thu, 09 Apr 2009) | 2 lines
+
+support for WSDL 2009-04-07
+------------------------------------------------------------------------
+
