@@ -1,5 +1,5 @@
 
-An interface to Amazon's simple DB.  Blocks of code taken from Rich
+An interface to Amazon's Simple DB.  Blocks of code taken from Rich
 Hickey's sdb library.
 
 No documentation.
@@ -12,8 +12,8 @@ for more information on typica.
 This code is licensed under the Eclipse Public License, see
 epl-v10.html.
 
-The typica and supporting libraries have their own Apache license.
-See the deps directory for a copy of that.
+typica and supporting libraries have their own Apache license.  See
+the deps directory for a copy of that.
 
 - Chris Dean
   30 June 2009

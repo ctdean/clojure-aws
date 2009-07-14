@@ -61,7 +61,7 @@
        (remove (fn [[k v]] (= k :aws/id))
                item)))
 
-(defn db-add! 
+(defn db-add 
   "Add item to the db.  Item is a map of keys and values.  SimpleDB
    has limitations on the size of records and fields that this
    function does not enforce."
@@ -69,7 +69,7 @@
   (sdb-result (.putAttributes (.getItem db (to-sdb-str id))
                               (item->attrs item))))
 
-(defn db-batch-add! 
+(defn db-batch-add 
   "Add a group of items to the db.  item-map is a map where the keys
    are the IDs and the values are the item to add."
   [db item-maps]
@@ -96,10 +96,10 @@
   (make-annotated-item id
                        (.getAttributes (.getItem db (to-sdb-str id)))))
 
-(defn db-delete! 
-  "Delete an item keyed by id"
+(defn db-remove
+  "Remove an item keyed by id"
   [db id]
-  (sdb-result (.deleteItem id (to-sdb-str id))))
+  (sdb-result (.deleteItem db (to-sdb-str id))))
 
 ;;;
 ;;; select
