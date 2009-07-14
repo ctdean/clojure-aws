@@ -7,7 +7,12 @@
 ;;;; Almost entirely by Rich, with some refactoring by Chris Dean
 
 (ns clojure.contrib.sdbcode
-  (:import [com.xerox.amazonws.sdb DataUtils]))
+  (:use clojure.contrib.def)
+  (:import [com.xerox.amazonws.sdb DataUtils]
+           java.util.TimeZone
+           java.text.SimpleDateFormat))
+
+(defvar- *UTC-DATE-FORMAT* "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
 (declare decode-sdb-str)
 
@@ -22,6 +27,20 @@
 (defn- decode-integer [offset nstr]
   (- (read-string (if (= \0 (nth nstr 0)) (subs nstr 1) nstr))
      offset))
+
+(defn- encode-date 
+  "Forces a UTC format"
+  [date]
+  (let [fmt (new SimpleDateFormat *UTC-DATE-FORMAT*)]
+    (.setTimeZone fmt (TimeZone/getTimeZone "UTC"))
+    (.format fmt date)))
+
+(defn- decode-date 
+  "Assumes a UTC format"
+  [s]
+  (let [fmt (new SimpleDateFormat *UTC-DATE-FORMAT*)]
+    (.setTimeZone fmt (TimeZone/getTimeZone "UTC"))
+    (.parse fmt s)))
 
 (defn from-sdb-str 
   "Reproduces the representation of the item from a string created by
@@ -49,7 +68,7 @@
   (encode-sdb-str "d" (DataUtils/encodeDouble d)))
 (defmethod to-sdb-str java.util.UUID [u] (encode-sdb-str "U" u))
 (defmethod to-sdb-str java.util.Date [d] 
-  (encode-sdb-str "D" (DataUtils/encodeDate d)))
+  (encode-sdb-str "D" (encode-date d)))
 (defmethod to-sdb-str Boolean [z] (encode-sdb-str "z" z))
 (defmethod to-sdb-str nil [n] "")
 
@@ -60,5 +79,5 @@
 (defmethod decode-sdb-str "l" [_ n] (decode-integer 10000000000000000000 n))
 (defmethod decode-sdb-str "d" [_ d] (DataUtils/decodeDouble d))
 (defmethod decode-sdb-str "U" [_ u] (java.util.UUID/fromString u))
-(defmethod decode-sdb-str "D" [_ d] (DataUtils/decodeDate d))
+(defmethod decode-sdb-str "D" [_ d] (decode-date d))
 (defmethod decode-sdb-str "z" [_ z] (condp = z, "true" true, "false" false))
